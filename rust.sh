@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Исправление символов переноса строк, если файл запущен с Windows-стилем (CRLF)
+if file --mime-encoding "$0" | grep -q "with CRLF"; then
+    sed -i 's/\r$//' "$0"
+    echo "Исправлен стиль переноса строк в $0. Повторите запуск скрипта."
+    exit 0
+fi
+
 # Определение текущего имени хоста
 HOSTNAME=$(hostname)
 HOST_ENTRY="127.0.0.1 $HOSTNAME"
